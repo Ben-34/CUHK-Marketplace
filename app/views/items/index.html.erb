@@ -1,8 +1,13 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Items" %>
+<% content_for :title, "CUHK Marketplace" %>
 
-<h1>Items</h1>
+<div style="text-align: center; margin-bottom: 30px; background-color: #f0f4f8; padding: 40px; border-radius: 8px; font-family: sans-serif;">
+  <h1 style="font-size: 2.5em; color: #2d3748; margin: 0;">Welcome to CUHK Marketplace</h1>
+  <p style="font-size: 1.1em; color: #718096; margin-top: 10px;">
+    The trusted platform for buying and selling second-hand items on campus.
+  </p>
+</div>
 
 <div id="items">
   <% @items.each do |item| %>
@@ -10,7 +15,10 @@
     <p>
       <%= link_to "Show this item", item %>
     </p>
+    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
   <% end %>
 </div>
 
-<%= link_to "New item", new_item_path %>
+<div style="margin-top: 20px; text-align: center;">
+  <%= link_to "New item", new_item_path, style: "background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
+</div>

@@ -70,6 +70,9 @@ To run this project locally on your machine:
     ```
 
 3.  **Setup the database:**
+  
+*==> Requirement : PostgreSQL must be installed in your machine. You should have access to at least one PostgreSQL role (username, credentials).*
+
 * Open `config/database.yml`.
     * Find the `development:` section.
     * Update the `username` and `password` fields with your local PostgreSQL credentials.
@@ -79,10 +82,10 @@ To run this project locally on your machine:
     rails db:migrate
     ```
 
-4.  **Start the server:**
+1.  **Start the server:**
     ```bash
     rails server
     ```
 
-5.  **Visit the app:**
+2.  **Visit the app:**
     Open your browser and go to `http://localhost:3000`

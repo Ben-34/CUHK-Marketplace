@@ -64,3 +64,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "cucumber-rails", "~> 4.0", groups: [:development, :test]

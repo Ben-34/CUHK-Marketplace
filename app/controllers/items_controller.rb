@@ -3,7 +3,16 @@ class ItemsController < ApplicationController
 
   # GET /items or /items.json
   def index
-    @items = Item.all
+    # FILTERING PRODUCTS DEPENDING ON MIN / MAX PRICE (set by user)
+    # CONSTANTS (global max and min prices, defaulting to values if DB is empty)
+    @PRICE_FLOOR = Item.minimum(:price).to_i
+    @PRICE_CEILING = Item.maximum(:price).to_i
+
+    @min_price = params.fetch(:min_price, @PRICE_FLOOR)
+    @max_price = params.fetch(:max_price, @PRICE_CEILING)
+    
+    @items = Item.where(price: @min_price..@max_price)
+  
   end
 
   # GET /items/1 or /items/1.json
@@ -21,7 +30,12 @@ class ItemsController < ApplicationController
 
   # POST /items or /items.json
   def create
-    @item = Item.new(item_params)
+    # Old way of creating item, invalid. Item needs college and user association.
+    # @item = Item.new(item_params).
+
+    # creating an item associated with the current user directly
+    @item = current_user.items.build(item_params) 
+    @item.college_id = current_user.college_id # associating item to user's college.
 
     respond_to do |format|
       if @item.save

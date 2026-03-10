@@ -8,3 +8,25 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+ /* THICKNESS OF UI */
+#price-slider.noUi-target {
+  height: 6px;          /* track thickness */
+}
+
+/* SLIDER HANDLE */
+#price-slider .noUi-handle {
+  width: 14px;          /* handle size */
+  height: 14px;
+  right: -7px;          /* center handle on track */
+  top: -4px;            /* align vertically with 6px track */
+  border-radius: 50%;
+}
+
+/* SLIDER HANDLE COLOR */
+#price-slider .noUi-connect{
+    background: rgb(2,4,3);
+}
+
+/* SLIDER HANDLE CHILDREN (hidden) */
+#price-slider .noUi-handle::after, .noUi-handle::before {display: none;}

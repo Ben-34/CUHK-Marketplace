@@ -1,5 +1,11 @@
 <p style="color: green"><%= notice %></p>
 
+<div style="text-align: left; margin-bottom: 8px;">
+  <p style= "color: green;">Signed in as <strong><%= current_user.email%></strong>. Welcome!</p> 
+  <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+</div>
+
+
 <% content_for :title, "CUHK Marketplace" %>
 
 <div style="text-align: center; margin-bottom: 30px; background-color: #f0f4f8; padding: 40px; border-radius: 8px; font-family: sans-serif;">
@@ -8,6 +14,62 @@
     The trusted platform for buying and selling second-hand items on campus.
   </p>
 </div>
+
+
+<!-- SLIDERS FOR MIN AND MAX PRICES -->
+
+<%= form_with url: items_path, method: :get, local: true do %>
+  <h3>Price</h3>
+  <p id="price-label"></p>
+
+  <div id="price-slider" style="margin: 24px 8px; width: 10%; min-width: 220px;"></div>
+
+  <%= hidden_field_tag :min_price, @min_price, id: "min_price" %>
+  <%= hidden_field_tag :max_price, @max_price, id: "max_price" %>
+
+  <%= submit_tag "Apply" %>
+  <%= link_to "Reset price range", items_path %>
+<% end %>
+
+<script>
+  document.addEventListener("turbo:load", function () {
+    const slider = document.getElementById("price-slider");
+    if (!slider) return;
+
+    const minInput = document.getElementById("min_price");
+    const maxInput = document.getElementById("max_price");
+    const label    = document.getElementById("price-label");
+
+    // Destroy existing slider if Turbo re-rendered this section, then re-create
+    if (slider.noUiSlider) {
+      slider.noUiSlider.destroy();
+    }
+
+    const startMin = Number(minInput.value) || <%= @PRICE_FLOOR %>;
+    const startMax = Number(maxInput.value) || <%= @PRICE_CEILING %>;
+
+    noUiSlider.create(slider, {
+      start: [startMin, startMax],
+      connect: true,
+      range: { min: <%= @PRICE_FLOOR %>, max: <%= @PRICE_CEILING %> },
+      step: 1
+    });
+
+    slider.noUiSlider.on("update", function (values) {
+      const min = Math.round(values[0]);
+      const max = Math.round(values[1]);
+
+      minInput.value = min;
+      maxInput.value = max;
+      label.textContent = min + "HKD - " + max + "HKD";
+    });
+  });
+</script>
+
+<!-- END OF SLIDERS -->
+
+
+<br>
 
 <div id="items">
   <% @items.each do |item| %>
